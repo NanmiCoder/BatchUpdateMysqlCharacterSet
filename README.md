@@ -1,0 +1,2 @@
+# BatchMysqlUpdateCharacterSet
+批量修改Mysql一个数据库中表、表字段的字符集
