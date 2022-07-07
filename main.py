@@ -39,7 +39,7 @@ class MysqlUpdateCharacterSet:
             tables_name_list.append(item.get(takle_key))
         return tables_name_list
 
-    async def moditfy_table_charset(self, tables: List[str]) -> NoReturn:
+    async def modify_table_charset(self, tables: List[str]) -> NoReturn:
         """
         修改数据库中所有tables的字符集
         :param tables:
@@ -49,10 +49,10 @@ class MysqlUpdateCharacterSet:
             await self.db.execute(f"alter table {table_name} row_format=Dynamic;")
             sql: str = f"ALTER TABLE {table_name} CONVERT TO CHARACTER SET {self.character_set} COLLATE {self.collate}"
             await self.db.execute(sql)
-            await self.moditfy_fields_chaset(table_name)
+            await self.modify_fields_chaset(table_name)
             print(f"Table：{table_name} update done !")
 
-    async def moditfy_fields_chaset(self, table_name: str) -> NoReturn:
+    async def modify_fields_chaset(self, table_name: str) -> NoReturn:
         """
         修改数据库中一张表字段的字符集
         :param table_name:
@@ -91,7 +91,7 @@ class MysqlUpdateCharacterSet:
         )
         await self.db.begin(db_config)
         all_tables: List[str] = await self.fetch_tables()
-        await self.moditfy_table_charset(tables=all_tables)
+        await self.modify_table_charset(tables=all_tables)
 
 
 async def main():
